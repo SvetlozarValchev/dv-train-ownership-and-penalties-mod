@@ -172,7 +172,7 @@ namespace TrainOwnershipPenalties
         static void Prefix(StationLocoSpawner __instance, ref bool ___playerEnteredLocoSpawnRange, GameObject ___spawnTrackMiddleAnchor, List<TrainCar> ___spawnedLocos)
         {
             Transform playerTransform = PlayerManager.PlayerTransform;
-            if ((UnityEngine.Object)playerTransform == (UnityEngine.Object)null || !SaveLoadController.playerPositionCarsAndJobsLoadingFinished)
+            if (playerTransform == null || !SaveLoadController.carsAndJobsLoadingFinished)
                 return;
 
             bool inRange = (double)(playerTransform.position - ___spawnTrackMiddleAnchor.transform.position).sqrMagnitude < (double)__instance.spawnLocoPlayerSqrDistanceFromTrack;
