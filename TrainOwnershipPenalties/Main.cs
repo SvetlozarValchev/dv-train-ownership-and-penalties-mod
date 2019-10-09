@@ -312,6 +312,22 @@ namespace TrainOwnershipPenalties
         }
     }
 
+    [HarmonyPatch(typeof(CarSpawner), "DeleteTrainCars")]
+    class CarSpawner_DeleteTrainCars_Patch
+    {
+        static List<TrainCarType> excludedTrainCarTypes = new List<TrainCarType>
+        {
+            TrainCarType.LocoShunter,
+            TrainCarType.LocoSteamHeavy,
+            TrainCarType.Tender
+        };
+
+        static void Prefix(CarSpawner __instance, ref List<TrainCar> trainCarsToDelete)
+        {
+            trainCarsToDelete = trainCarsToDelete.Where(trainCar => !excludedTrainCarTypes.Contains(trainCar.carType)).ToList();
+        }
+    }
+
     class CarsTOPSaveData
     {
         public string carGuid;
